@@ -6,14 +6,16 @@ import sys
 
 yacdProxyPath="http://192.168.31.1:9999/ui/#/proxies"
 def run(playwright: Playwright,proxy,proxyemby,autoclose) -> None:
+    print("params: ",proxy," ",proxyemby," ",autoclose)
     browser = playwright.chromium.launch(headless=True)
     context = browser.new_context()
     page = context.new_page()
     page.goto(yacdProxyPath)
-    if autoclose:
+    if autoclose == "1":
         page.locator("._btn_vsco8_4").first.click()
         page.locator("xpath=/html/body/div[4]/div/div/div[3]/div/div/div[2]").click()
         page.get_by_role("dialog").press("Escape")
+        print("autoclose selected")
     page.get_by_role("button", name="科学上网Selector").click()
     page.get_by_text(proxy).first.click()
     page.get_by_role("button", name="emby_selSelector").click()
