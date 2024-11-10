@@ -12,7 +12,7 @@ def run(playwright: Playwright,proxy,proxyemby,autoclose) -> None:
     page.goto(yacdProxyPath)
     if autoclose:
         page.locator("._btn_vsco8_4").first.click()
-        page.locator("div").filter(has_text=re.compile(r"^切换代理时自动断开旧连接$")).locator("div").nth(3).click()
+        page.locator("xpath=/html/body/div[4]/div/div/div[3]/div/div/div[2]").click()
         page.get_by_role("dialog").press("Escape")
     page.get_by_role("button", name="科学上网Selector").click()
     page.get_by_text(proxy).first.click()
@@ -35,4 +35,4 @@ if __name__ == "__main__":
     autoclose = sys.argv[3]
 
     with sync_playwright() as playwright:
-        run(playwright, proxy, proxyemby)
+        run(playwright, proxy, proxyemby, autoclose)
